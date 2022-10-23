@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace QuixortModding
+﻿namespace QuixortModding
 {
     internal class Program
     {
@@ -20,9 +18,8 @@ namespace QuixortModding
             // Find the file type.
             switch (text[0])
             {
-                case "[Teams]":
-                    Teams.Import(args, text);
-                    break;
+                case "[Teams]": Teams.Import(args, text); break;
+                case "[Tutorial]": Tutorial.Import(args, text); break;
 
                 default:
                     Console.WriteLine("No data found to import.");
