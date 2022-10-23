@@ -18,6 +18,7 @@
             // Find the file type.
             switch (text[0])
             {
+                case "[Prompts]": Sequence.Import(args, text); break;
                 case "[Teams]": Teams.Import(args, text); break;
                 case "[Tutorial]": Tutorial.Import(args, text); break;
 
