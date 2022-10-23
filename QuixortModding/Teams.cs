@@ -10,7 +10,7 @@ namespace QuixortModding
         public class TeamFormatData
         {
             [JsonProperty(Order = 1, PropertyName = "content")]
-            public List<QuixortTeamName> Content = new();
+            public List<QuixortTeamName> Content { get; set; } = new();
         }
 
         /// <summary>
@@ -73,15 +73,32 @@ namespace QuixortModding
             // Loop through the provided text file.
             for (int i = 1; i < text.Length; i++)
             {
+                // Check for the US and Explicit tags.
+                bool us = false;
+                bool _explicit = false;
+
+                if (text[i].Contains("(us)"))
+                {
+                    text[i] = text[i].Replace("(us)", "");
+                    us = true;
+                }
+                if (text[i].Contains("(explicit)"))
+                {
+                    text[i] = text[i].Replace("(explicit)", "");
+                    _explicit = true;
+                }
+
                 // Split each entry based on the | character.
                 string[] split = text[i].Split('|');
 
                 // Set up a new team for this line.
                 QuixortTeamName team = new()
                 {
+                    USCentric = us,
                     ID = i + 24240,
                     TeamOneName = $"TEAM {split[0].ToUpper()}",
-                    TeamTwoName = $"TEAM {split[1].ToUpper()}"
+                    TeamTwoName = $"TEAM {split[1].ToUpper()}",
+                    Explicit = _explicit
                 };
                 teamData.Content.Add(team);
             }
